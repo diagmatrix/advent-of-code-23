@@ -27,7 +27,7 @@ def num_to_digit(digit):
 
 
 if __name__ == "__main__":
-    problem_input = open("input.txt", "r").readlines()
+    problem_input = open("input.txt", "r").readlines()  # Add input.txt in the directory
     total = 0
     for line in problem_input:
         digits = []
