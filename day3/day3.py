@@ -2,9 +2,10 @@
 SCHEMATIC = [line.strip() for line in open("input.txt", "r").readlines()]  # Add input.txt in the directory
 ROWS = len(SCHEMATIC)
 COLUMNS = len(SCHEMATIC[0])
-
 valid_positions = []
 
+
+# ------------------ FUNCTIONS ------------------
 def add_symbols(row_n, col_n):
     """Calculates the 'area of infulence' of a found symbol"""
     positions = []
@@ -15,6 +16,14 @@ def add_symbols(row_n, col_n):
                     positions.append((r,c))
     return positions
 
+
+def add_digit_gear(digit_string, positions):
+    for gear in gears:
+        if bool(set(gear['positions']) & set(positions)):
+            gear['parts'].append(int(digit_string))
+
+
+# ------------------ PROGRAM ------------------
 # Parse valid positions
 for i in range(ROWS):
     for j, symbol in enumerate(SCHEMATIC[i]):
@@ -47,11 +56,6 @@ for i in range(ROWS):
         if symbol == '*':
             gears.append({'parts': [], 'positions': add_symbols(i,j)})
 
-def add_digit_gear(digit_string, positions):
-    for gear in gears:
-        if bool(set(gear['positions']) & set(positions)):
-            gear['parts'].append(int(digit_string))
-
 # Add parts to possible gears
 for i, line in enumerate(SCHEMATIC):
     digit_buffer = ""
@@ -71,7 +75,7 @@ for i, line in enumerate(SCHEMATIC):
 # Get gear ratios
 gear_ratio_total = 0
 for gear in gears:
-    if len(gear['parts'])==2:
+    if len(gear['parts']) == 2:
         gear_ratio_total += gear['parts'][0] * gear['parts'][1]
 
 print(f'Total parts: {total}')
